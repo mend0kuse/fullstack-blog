@@ -1,0 +1,20 @@
+[class*="__container"] {
+	margin: 0 auto;
+	width: 1130px;
+	padding: 0 15px;
+	@media (min-width: 1600px) {
+		width: 1500px;
+	}
+}
+
+.sect-title {
+	margin-top: 200px;
+	font-size: 30px;
+	font-weight: bold;
+}
+.req-error {
+	color: red;
+	font-weight: bold;
+	margin-top: 20px;
+	font-size: 25px;
+}

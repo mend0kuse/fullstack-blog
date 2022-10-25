@@ -1,0 +1,1 @@
+export const secret = "random_secret_key"

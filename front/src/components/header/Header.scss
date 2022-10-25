@@ -1,0 +1,32 @@
+.header {
+	background-color: black;
+	&__container {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+}
+
+.nav-header {
+	&__list {
+		display: flex;
+	}
+	&__link {
+		display: block;
+		padding: 10px 5px;
+		color: white;
+		transition: 0.2s linear all;
+		&:hover {
+			background-color: white;
+			color: black;
+		}
+	}
+}
+.buttons-header {
+	display: flex;
+	column-gap: 10px;
+	&__item {
+		display: block;
+		color: white;
+	}
+}
