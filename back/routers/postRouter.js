@@ -10,8 +10,6 @@ postsRouter.get('/', PostsController.getAll);
 postsRouter.get('/:id', PostsController.getById);
 
 postsRouter.post('/', authMiddleware, PostsController.createPost);
-// postsRouter.post('/', PostsController.createPost);
-
 
 postsRouter.put('/', authMiddleware, PostsController.updatePost);
 

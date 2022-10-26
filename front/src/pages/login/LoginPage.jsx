@@ -4,9 +4,10 @@ import './Login.scss'
 import MyInput from '../../components/UI/input/MyInput'
 import MyButton from '../../components/UI/button/MyButton'
 import { authApi } from '../../services/authService'
+import { useNavigate } from 'react-router-dom'
 
 const LoginPage = () => {
-
+	const pagesRouter = useNavigate()
 	const { jwtToken, setJwtToken } = useContext(authContext)
 
 	const [loginReq, loginReqInfo] = authApi.useLoginMutation()
@@ -24,7 +25,10 @@ const LoginPage = () => {
 		}
 		loginReq(userData)
 			.unwrap()
-			.then(resolve => setJwtToken(resolve.token))
+			.then(resolve => {
+				setJwtToken(resolve.token)
+				pagesRouter('/posts')
+			})
 			.catch(reject => console.log(reject))
 	}
 
