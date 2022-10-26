@@ -1,0 +1,25 @@
+.post-single {
+	margin-top: 20px;
+}
+.post {
+	&__comments {
+		display: flex;
+		flex-direction: column;
+		row-gap: 15px;
+	}
+}
+.create-comment {
+	margin-top: 20px;
+	row-gap: 5px;
+	&__form {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+		row-gap: 10px;
+	}
+	&__area {
+		resize: none;
+		width: 100%;
+		border: 1px solid black;
+	}
+}

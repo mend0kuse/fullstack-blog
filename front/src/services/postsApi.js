@@ -39,39 +39,16 @@ export const postsApi = createApi({
 			}),
 			invalidatesTags: ['Posts']
 		}),
-
+		updateOne: builder.mutation({
+			query: ([newPost, token]) => ({
+				url: `/`,
+				method: "PUT",
+				body: newPost,
+				headers: {
+					authorization: token
+				}
+			}),
+			invalidatesTags: ['Posts']
+		}),
 	})
-
-	//удаление проекта
-	// 	deleteProject: builder.mutation < KanbanProject, number> ({
-	// 		query: (id) => ({
-	// 			url: `/projects/${id}`,
-	// 			method: 'DELETE',
-	// 		}),
-	// 		invalidatesTags: ['kanban']
-	// 	}),
-	//создание проекта
-	// 	createProject: builder.mutation < KanbanProject, KanbanProject> ({
-	// 		query: (newProj) => ({
-	// 			url: `/projects`,
-	// 			method: 'POST',
-	// 			body: { ...newProj }
-	// 		}),
-	// 		invalidatesTags: ['kanban'],
-	// 		transformResponse: (response: KanbanProject): KanbanProject => {
-	// 			return response
-	// 		}
-	// 	}),
-	// обновление проекта
-	// updateProject: builder.mutation < KanbanProject, [number, KanbanBoard[]] > ({
-	// 	query: ([id, boards]) => ({
-	// 		url: `/projects/${id}`,
-	// 		method: 'PUT',
-	// 		body: {
-	// 			boards: boards
-	// 		}
-	// 	}),
-	// 	invalidatesTags: ['kanban']
-	// }),
-	// }),
 })

@@ -1,5 +1,6 @@
 import Router from 'express';
 import CommentController from "../controllers/commentController.js"
+import { authMiddleware } from '../middlewares/authMiddleware.js'
 
 export const commentRouter = new Router();
 
@@ -7,8 +8,8 @@ commentRouter.get('/', CommentController.getAll);
 
 commentRouter.get('/:id', CommentController.getOneById);
 
-commentRouter.post('/', CommentController.createComment);
+commentRouter.post('/', authMiddleware, CommentController.createComment);
 
-commentRouter.put('/', CommentController.updateComments);
+// commentRouter.put('/', CommentController.updateComments);
 
 commentRouter.delete('/:id', CommentController.deleteById);

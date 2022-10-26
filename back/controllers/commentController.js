@@ -56,27 +56,27 @@ class CommentController {
 	}
 	async createComment(req, res) {
 		try {
-			// const { postId, userId, title, body } = req.body
-			const comment = await Comment.create({ ...req.body })
+			const userId = req.user.id
+			const comment = await Comment.create({ ...req.body, userId: userId })
 			res.status(201).json(comment);
 		} catch (e) {
 			console.log(e);
 			res.status(500).json(e);
 		}
 	}
-	async updateComments(req, res) {
-		try {
-			const comment = req.body;
-			if (!comment._id) {
-				res.status(400).json({ 'message': 'id не указан' })
-			}
-			const updatedComment = await Comment.findByIdAndUpdate(comment._id, comment, { new: true });
-			return res.json(updatedComment);
-		} catch (e) {
-			console.log(e);
-			res.status(500).json(e);
-		}
-	}
+	// async updateComments(req, res) {
+	// 	try {
+	// 		const comment = req.body;
+	// 		if (!comment._id) {
+	// 			res.status(400).json({ 'message': 'id не указан' })
+	// 		}
+	// 		const updatedComment = await Comment.findByIdAndUpdate(comment._id, comment, { new: true });
+	// 		return res.json(updatedComment);
+	// 	} catch (e) {
+	// 		console.log(e);
+	// 		res.status(500).json(e);
+	// 	}
+	// }
 	async deleteById(req, res) {
 		const commentId = req.params.id;
 

@@ -5,7 +5,6 @@ export const authorApi = createApi({
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/authors' }),
     tagTypes: ['Author'],
     endpoints: (builder) => ({
-        //получение проектов
         getAll: builder.query({
             query: () => ({
                 url: `/`,
@@ -18,16 +17,29 @@ export const authorApi = createApi({
             }),
             providesTags: result => ['Author']
         }),
-        // createOne: builder.mutation({
-        // 	query: ([newPost, token]) => ({
-        // 		url: `/`,
-        // 		method: "POST",
-        // 		body: newPost,
-        // 		headers: {
-        // 			authorization: token
-        // 		}
-        // 	}),
-        // 	invalidatesTags: ['Posts']
-        // }),
+        getPostsCount: builder.query({
+            query: (id) => ({
+                url: `/${id}/posts-number`,
+            }),
+            providesTags: result => ['Author']
+        }),
+        getCommentsCount: builder.query({
+            query: (id) => ({
+                url: `/${id}/comments-number`,
+            }),
+            providesTags: result => ['Author']
+        }),
+        getComments: builder.query({
+            query: (id) => ({
+                url: `/${id}/comments`,
+            }),
+            providesTags: result => ['Author']
+        }),
+        getPosts: builder.query({
+            query: (id) => ({
+                url: `/${id}/posts`,
+            }),
+            providesTags: result => ['Author']
+        }),
     })
 })
