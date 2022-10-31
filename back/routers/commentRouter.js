@@ -10,6 +10,4 @@ commentRouter.get('/:id', CommentController.getOneById);
 
 commentRouter.post('/', authMiddleware, CommentController.createComment);
 
-// commentRouter.put('/', CommentController.updateComments);
-
 commentRouter.delete('/:id', CommentController.deleteById);

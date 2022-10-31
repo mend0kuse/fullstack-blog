@@ -31,7 +31,6 @@ class PostController {
 	}
 	async getByUserId(req, res) {
 		const userId = req.params.id;
-
 		try {
 			const posts = await Post.find({ userId: userId }).sort({ "createdAt": "asc" });
 			return res.status(200).json(posts);

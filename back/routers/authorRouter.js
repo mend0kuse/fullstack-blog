@@ -17,9 +17,3 @@ authorRouter.get('/:id/comments', CommentController.getByUserId);
 
 authorRouter.get('/:id/comments-number', CommentController.getNumberByUserId);
 
-authorRouter.post('/', AuthorController.createAuthor);
-
-authorRouter.put('/', AuthorController.updateAuthor);
-
-authorRouter.delete('/:id', AuthorController.deleteById);
-
