@@ -29,27 +29,36 @@ const PostsPage = () => {
 	//для содания нового поста
 	const postTitleRef = useRef(null)
 	const postBodyRef = useRef(null)
+	const [uploadFile, setUploadFile] = useState(null);
 
 	const [updatedPost, setUpdatedPost] = useState({ title: '', body: '' })
 
 	const createPost = async (e) => {
 		e.preventDefault()
-		const newPost = {
-			title: postTitleRef.current.value,
-			body: postBodyRef.current.value
+		let formData = new FormData()
+		if (uploadFile) {
+			formData.append('file', uploadFile[0], `${Date.now()}_avatar.png`)
 		}
-		await createPostReq([newPost, jwtToken])
+		formData.append('title', postTitleRef.current.value)
+		formData.append('body', postBodyRef.current.value)
+
+		await createPostReq([formData, jwtToken])
 		setModalCreateVisible(false)
+		setUploadFile(null)
 	}
 
 	const updatePost = async (e) => {
 		e.preventDefault()
-		const newPost = {
-			_id: updatedPostId,
-			title: updatedPost.title,
-			body: updatedPost.body,
+		let formData = new FormData()
+		formData.append('title', updatedPost.title)
+		formData.append('_id', updatedPostId)
+		formData.append('body', updatedPost.body)
+
+		if (uploadFile) {
+			formData.append('file', uploadFile[0], `${Date.now()}_avatar.png`)
 		}
-		updatePostReq([newPost, jwtToken])
+
+		updatePostReq([formData, jwtToken])
 		setUpdatedPost({ title: '', body: '' })
 		setUpdatedPostId(null)
 		setModalUpdateVisible(false)
@@ -67,11 +76,11 @@ const PostsPage = () => {
 			</div>
 
 			<MyModal visible={modalCreateVisible} setVisible={setModalCreateVisible}>
-				<FormCreate body={postBodyRef} title={postTitleRef} fn={createPost} />
+				<FormCreate body={postBodyRef} title={postTitleRef} setUploadFile={setUploadFile} fn={createPost} />
 			</MyModal>
 
 			<MyModal visible={modalUpdateVisible} setVisible={setModalUpdateVisible}>
-				<FormUpdate updatedPost={updatedPost} setUpdatedPost={setUpdatedPost} fn={updatePost} />
+				<FormUpdate updatedPost={updatedPost} setUploadFile={setUploadFile} setUpdatedPost={setUpdatedPost} fn={updatePost} />
 			</MyModal>
 		</div>
 	)

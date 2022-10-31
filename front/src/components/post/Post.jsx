@@ -33,6 +33,9 @@ const Post = ({ className, post, ...props }) => {
 	}
 	return (
 		<div className={rootClass.join(' ')} onClick={e => pagesRouter(`/posts/${post._id}`)}>
+			{post.avatar
+				&& <img src={'http://localhost:5000/images/' + post.avatar} className='post__avatar' alt="sdf" />
+			}
 			<h3 className='post__title'>{post.title}</h3>
 			<p className='post__content'>{post.body}</p>
 			<p className='post__author'>Автор:{author && `${author.username}`}</p>

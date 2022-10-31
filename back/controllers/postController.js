@@ -1,6 +1,9 @@
 import { Post } from "../models/Post.js";
 import { Comment } from "../models/Comments.js";
+import fs from 'fs'
+import path from 'path'
 
+const __dirname = path.resolve()
 
 
 class PostController {
@@ -52,7 +55,13 @@ class PostController {
 	async createPost(req, res) {
 		try {
 			const userId = req.user.id
-			const post = await Post.create({ userId, ...req.body })
+			let post
+
+			if (req.file) {
+				post = await Post.create({ userId, ...req.body, avatar: req.file.filename })
+			} else {
+				post = await Post.create({ userId, ...req.body })
+			}
 
 			res.status(201).json(post);
 		} catch (e) {
@@ -62,11 +71,25 @@ class PostController {
 	}
 	async updatePost(req, res) {
 		try {
-			const post = req.body;
+			const post = {...req.body};
 			if (!post._id) {
 				res.status(400).json({ 'message': 'id не указан' })
 			}
-			const updatedPost = await Post.findByIdAndUpdate(post._id, post, { new: true });
+
+			let deleted = await Post.findOne({ _id: req.body._id }, { avatar: 1 })
+			
+			if (deleted.avatar) {
+				fs.unlink(path.join(__dirname, 'back', 'images', deleted.avatar), () => { });
+			}
+
+			let updatedPost;
+			
+			if (req.file) {
+				updatedPost = await Post.findByIdAndUpdate(post._id, { ...post, avatar: req.file.filename }, { new: true })
+			} else {
+				updatedPost = await Post.findByIdAndUpdate(post._id, post, { new: true })
+			}
+			
 			return res.json(updatedPost);
 		} catch (e) {
 			console.log(e);
